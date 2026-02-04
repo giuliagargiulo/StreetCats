@@ -15,3 +15,11 @@ class UserOut(UserIn):
     uu_id: str = Field(..., title= "UUID of the user", example= "550e8400-e29b-41d4-a716-446655440000")
     created_at: datetime = Field(..., title= "Account creation timestamp", example= "2024-01-01T12:00:00Z")
     
+responses = {
+    status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
+    status.HTTP_401_UNAUTHORIZED: {"description": "Unauthorized"},
+    status.HTTP_404_NOT_FOUND: {"description": "Resource not found"}
+}
+
+router = APIRouter()
+
