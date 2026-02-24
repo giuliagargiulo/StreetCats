@@ -24,3 +24,7 @@ responses = {
    
 router = APIRouter()
 
+# ROUTES:
+# POST{/user}: aggiungi un gatto (solo un utente loggato può)
+# GET: tutti i gatti
+# GET{/id}: cerca per id
