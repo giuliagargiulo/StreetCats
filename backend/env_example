@@ -3,3 +3,4 @@ DB_PASSWORD=password
 DB_HOST=db
 DB_PORT=5432
 DB_NAME= db_name
+SECRET_KEY=63ee6e9c55f5eab6cc15be9fb40bc5f163ab441d4a03ce1eba3bb02f9f1b8f42

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from router.cat import cat as cat_router
-from router.user import user as user_router
-from router.comment import comment as comment_router
-from router.auth import auth as auth_router
+from api.router.cat.cat import router as cat_router
+from api.router.user.user import router as user_router
+from api.router.comment.comment import router as comment_router
+from api.router.auth.auth import router as auth_router
 
 app = FastAPI(
     title = "StreetCats API",

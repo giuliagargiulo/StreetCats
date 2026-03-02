@@ -1,6 +1,7 @@
-from pydantic import APIRouter, BaseModel, Field
+from fastapi import APIRouter
+from pydantic import BaseModel, Field
 from starlette import status
-from database import pgsqldb, PGSQL_SCHEMA
+from api.database import pgdb, PGSQL_SCHEMA
 from datetime import datetime
 
 class CommentIn(BaseModel):
