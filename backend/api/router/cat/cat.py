@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Path, Body, status, HTTPException
 from pydantic import BaseModel, Field
 from api.database import pgdb
 from uuid import UUID
-from datetime import date
+from datetime import datetime
 from api.router.auth.auth_util import get_current_user
 
 class Location(BaseModel):
@@ -18,7 +18,7 @@ class CatIn(BaseModel):
 
 class CatOut(CatIn):
     uu_id: UUID = Field(..., title="UUID of the cat post", example="550e8400-e29b-41d4-a716-446655440000")
-    date_added: date = Field(..., title = "Adding date of the cat post", example = "22-02-2025")
+    created_at: datetime = Field(..., title="Creation date of the cat post", example="2025-02-22T14:30:00Z")
     
 responses = {
     status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal server error"},
@@ -38,17 +38,16 @@ router = APIRouter()
             status_code=status.HTTP_200_OK,
             description = "Get cat by id")
 async def get_cat_by_id(uu_id: UUID):
-    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at::date as date_added "
+    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at "
              "FROM tbl_cat "
              "WHERE uu_id = :uu_id ")
     q_data = {"uu_id": uu_id}
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
-        # if not res:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_404_NOT_FOUND, detail="Cat not found")
-        # return res
-        return res if res else []
+        if not res:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Cat not found")
+        return res
     except HTTPException:
         raise
     except Exception as ex:
@@ -63,14 +62,15 @@ async def get_cat_by_id(uu_id: UUID):
             status_code=status.HTTP_200_OK,
             description = "Get all the cats")
 async def get_all_cats():
-    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at::date as date_added "
+    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at "
              "FROM tbl_cat ")
     try:
         res = await pgdb.fetch_all(query=query)
-        if not res:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="There are not cats")
-        return res
+        # if not res:
+        #     raise HTTPException(
+        #         status_code=status.HTTP_404_NOT_FOUND, detail="There are not cats")
+        # return res
+        return res if res else []
     except HTTPException:
         raise
     except Exception as ex:
@@ -86,10 +86,10 @@ async def get_all_cats():
 async def create_cat(cat: CatIn, user_uu_id: UUID = Depends(get_current_user)):
     query= ("INSERT INTO tbl_cat(title, description, location, picture_url, user_uu_id) "
             "VALUES (:title, :description, :location, :picture_url, :user_uu_id)"
-            "RETURNING uu_id:text ")
+            "RETURNING uu_id::text, title, description, location, picture_url, " 
+            "user_uu_id, created_at ")
     q_data = cat.model_dump()
-    q_data['user_uu_id'] = user_uu_id
-    
+    q_data['user_uu_id'] = str(user_uu_id)
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         return res

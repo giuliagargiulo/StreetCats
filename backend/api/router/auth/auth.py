@@ -37,13 +37,11 @@ responses = {
              description = "Register a new user",
              tags = ["Auth"])
 async def register_user(user: UserCreate):
-    query = ("INSERT INTO tbl_user (username, password, email, created_at) "
-             "VALUES (:username, :password, :email, :created_at) "
+    query = ("INSERT INTO tbl_user (username, password, email) "
+             "VALUES (:username, :password, :email) "
              "RETURNING uu_id::text, username, email ")
-    q_data = user.dict()
-    q_data["password"] = pwd_context.hash(user.password)
-    q_data["created_at"] = datetime.now(timezone.utc)
-    
+    q_data = user.model_dump()
+    q_data["password"] = pwd_context.hash(user.password)    
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         return res
