@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
-from api.database import PGSQL_SCHEMA, pgdb
+from api.database import pgdb
 from datetime import datetime, timezone
 from passlib.context import CryptContext
 from api.router.user.user import UserOut, get_user_by_username
@@ -48,10 +48,8 @@ async def register_user(user: UserCreate):
         res = await pgdb.fetch_one(query=query, values=q_data)
         return res
     except UniqueViolationError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Username or email already exists"
-    )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="Username or email already exists")
        
        
 @router.post("/login/",
@@ -66,12 +64,9 @@ async def login(user: UserLogin):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Wrong username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+            headers={"WWW-Authenticate": "Bearer"},)
         
-    access_token = create_access_token(
-        data={"sub": user_db["username"]}
-    )
+    access_token = create_access_token(data={"sub": user_db["username"]})
     return {
         "access_token": access_token, 
         "token_type": "bearer"

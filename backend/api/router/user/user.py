@@ -1,14 +1,11 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel, Field 
-from api.database import PGSQL_SCHEMA, pgdb
-from databases import Database
-from datetime import datetime, timezone
+from api.database import pgdb
 from fastapi.responses import JSONResponse
-
-## DA RIVEDERE TUTTO
+from uuid import UUID
 
 class UserOut(BaseModel):
-    uu_id: str = Field(..., title= "UUID of the user", example= "550e8400-e29b-41d4-a716-446655440000")
+    uu_id: UUID = Field(..., title= "UUID of the user", example= "550e8400-e29b-41d4-a716-446655440000")
     email: str = Field(..., title= "email of the user", example= "giuliagargiulo@example.it")
     username: str = Field(..., title= "username of the user", example= "giuliagarg28")
     
@@ -30,7 +27,7 @@ router = APIRouter()
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get user by id")
-async def get_user_by_id(uu_id: str):
+async def get_user_by_id(uu_id: UUID):
     query = ("SELECT uu_id::text, email, username "
             "FROM tbl_user "
             "WHERE uu_id = :uu_id ")
@@ -38,12 +35,15 @@ async def get_user_by_id(uu_id: str):
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         if not res:
-            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, 
-                                content={"detail": "User not found"})
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return res
+    except HTTPException:
+        raise
     except Exception as ex:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, 
-                            content={"detail": str(ex)})
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+            detail="Internal server error")
         
         
 @router.get("/byUsername/{username}",
@@ -59,14 +59,12 @@ async def get_user_by_username(username: str):
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         if not res:
-            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, 
-                                content={"detail": "User not found"})
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
         return res
-    except Exception as ex:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, 
-                            content={"detail": str(ex)})
-
-
-        
-    
-    
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error")
