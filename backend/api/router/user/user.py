@@ -9,8 +9,7 @@ class UserOut(BaseModel):
     username: str = Field(..., title= "username of the user", example= "giuliagarg28")
     
 responses = {
-    status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
-    status.HTTP_401_UNAUTHORIZED: {"description": "Unauthorized"},
+    status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal server error"},
     status.HTTP_404_NOT_FOUND: {"description": "Resource not found"}
 }
 

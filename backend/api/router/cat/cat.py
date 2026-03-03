@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Path, Body, status, HTTPException
 from pydantic import BaseModel, Field
 from api.database import pgdb
 from uuid import UUID
+from datetime import date
 from api.router.auth.auth_util import get_current_user
 
 class Location(BaseModel):
@@ -17,7 +18,8 @@ class CatIn(BaseModel):
 
 class CatOut(CatIn):
     uu_id: UUID = Field(..., title="UUID of the cat post", example="550e8400-e29b-41d4-a716-446655440000")
-        
+    date_added: date = Field(..., title = "Adding date of the cat post", example = "22-02-2025")
+    
 responses = {
     status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal server error"},
     status.HTTP_404_NOT_FOUND: {"description": "Resource not found"}
@@ -36,7 +38,7 @@ router = APIRouter()
             status_code=status.HTTP_200_OK,
             description = "Get cat by id")
 async def get_cat_by_id(uu_id: UUID):
-    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id "
+    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at::date as date_added "
              "FROM tbl_cat "
              "WHERE uu_id = :uu_id ")
     q_data = {"uu_id": uu_id}
@@ -61,7 +63,7 @@ async def get_cat_by_id(uu_id: UUID):
             status_code=status.HTTP_200_OK,
             description = "Get all the cats")
 async def get_all_cats():
-    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id "
+    query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at::date as date_added "
              "FROM tbl_cat ")
     try:
         res = await pgdb.fetch_all(query=query)
