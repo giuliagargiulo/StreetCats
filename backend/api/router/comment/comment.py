@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from starlette import status
-from api.database import pgdb, PGSQL_SCHEMA
+from api.database import pgdb
 from datetime import datetime
 
 class CommentIn(BaseModel):
@@ -21,3 +21,5 @@ responses = {
 }
 
 router = APIRouter()
+
+

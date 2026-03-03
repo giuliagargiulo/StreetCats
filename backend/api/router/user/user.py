@@ -1,7 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel, Field 
 from api.database import pgdb
-from fastapi.responses import JSONResponse
 from uuid import UUID
 
 class UserOut(BaseModel):
@@ -41,6 +40,7 @@ async def get_user_by_id(uu_id: UUID):
     except HTTPException:
         raise
     except Exception as ex:
+        print("ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             detail="Internal server error")
@@ -64,7 +64,8 @@ async def get_user_by_username(username: str):
         return res
     except HTTPException:
         raise
-    except Exception:
+    except Exception as ex:
+        print("ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error")
