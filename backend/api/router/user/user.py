@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from pydantic import BaseModel, Field 
-from starlette import status
 from api.database import PGSQL_SCHEMA, pgdb
 from databases import Database
 from datetime import datetime, timezone

@@ -1,11 +1,11 @@
+from fastapi import Depends, status, HTTPException
+from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 import os
 from jose import jwt, JWTError
-from fastapi import Depends, status, HTTPException
 from passlib.context import CryptContext
-from fastapi.security import OAuth2PasswordBearer
-from user.user import get_user_by_username
+from api.router.user.user import get_user_by_username
 
 
 SECRET_KEY = os.getenv("SECRET_KEY")

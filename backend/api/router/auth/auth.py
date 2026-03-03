@@ -1,12 +1,12 @@
-from fastapi import APIRouter, Depends
-from pdantyc import BaseModel, Field
-from starlette import status
+from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, Field
 from api.database import PGSQL_SCHEMA, pgdb
 from datetime import datetime, timezone
-from fastapi.responses import HTTPException, UniqueViolationError
 from passlib.context import CryptContext
-from auth_util import create_access_token, get_current_user
-from user.user import UserOut, get_user_by_username
+from api.router.user.user import UserOut, get_user_by_username
+from api.router.auth.auth_util import create_access_token, get_current_user
+from asyncpg.exceptions import UniqueViolationError
+
 # ROUTES
 # POST{}: login
 # POST{}: register_user
@@ -76,7 +76,6 @@ async def login(user: UserLogin):
         "access_token": access_token, 
         "token_type": "bearer"
     }
-    
     
 @router.get("/me", 
             response_model=UserOut,
