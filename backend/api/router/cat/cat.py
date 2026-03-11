@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Path, Body, status, HTTPException
 from pydantic import BaseModel, Field
-from api.database import pgdb
+from api.database import get_db
 from uuid import UUID
 from datetime import datetime
 from api.router.auth.auth_util import get_current_user
@@ -32,12 +32,12 @@ router = APIRouter()
 # GET: tutti i gatti
 # GET{/id}: cerca per id
 
-@router.get("/byID/{uu_id}",
+@router.get("/by-id/{uu_id}",
             response_model=CatOut,
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get cat by id")
-async def get_cat_by_id(uu_id: UUID):
+async def get_cat_by_id(uu_id: UUID, pgdb = Depends(get_db)):
     query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at "
              "FROM tbl_cat "
              "WHERE uu_id = :uu_id ")
@@ -51,7 +51,7 @@ async def get_cat_by_id(uu_id: UUID):
     except HTTPException:
         raise
     except Exception as ex:
-        print("ERROR: {ex}")
+        print(f"ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             detail="Internal server error")
@@ -61,7 +61,7 @@ async def get_cat_by_id(uu_id: UUID):
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get all the cats")
-async def get_all_cats():
+async def get_all_cats(pgdb = Depends(get_db)):
     query = ("SELECT uu_id::text, title, description, location, picture_url, user_uu_id, created_at "
              "FROM tbl_cat ")
     try:
@@ -74,18 +74,18 @@ async def get_all_cats():
     except HTTPException:
         raise
     except Exception as ex:
-        print("ERROR: {ex}")
+        print(f"ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             detail="Internal server error")
         
-@router.post("/newCat",
+@router.post("/new-cat",
              response_model=CatOut,
              status_code=status.HTTP_201_CREATED,
              description = "A logged user add a new cat on the platform")
-async def create_cat(cat: CatIn, user_uu_id: UUID = Depends(get_current_user)):
+async def create_cat(cat: CatIn, user_uu_id: UUID = Depends(get_current_user), pgdb = Depends(get_db)):
     query= ("INSERT INTO tbl_cat(title, description, location, picture_url, user_uu_id) "
-            "VALUES (:title, :description, :location, :picture_url, :user_uu_id)"
+            "VALUES (:title, :description, :location, :picture_url, :user_uu_id) "
             "RETURNING uu_id::text, title, description, location, picture_url, " 
             "user_uu_id, created_at ")
     q_data = cat.model_dump()

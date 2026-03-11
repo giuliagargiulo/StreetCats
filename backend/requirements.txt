@@ -7,3 +7,4 @@ databases[aiopg]
 starlette
 passlib
 python-jose
+bcrypt==4.0.1

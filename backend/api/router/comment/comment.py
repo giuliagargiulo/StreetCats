@@ -26,7 +26,7 @@ router = APIRouter()
 # POST{}: add a comment (solo un utente loggato può)
 # GET: get comment by cat
 
-@router.get("/byCat/{cat_uu_id}",
+@router.get("/by-cat/{cat_uu_id}",
             response_model= list[CommentOut],
             responses = {**responses},
             status_code=status.HTTP_200_OK,
@@ -47,7 +47,7 @@ async def get_comments_by_cat(cat_uu_id: UUID):
             detail="Internal server error")
 
 
-@router.post("/newComment",
+@router.post("/new-comment",
             response_model=CommentOut,
             status_code=status.HTTP_201_CREATED,
             description = "A logged user add a new comment to a cat post")

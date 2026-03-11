@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
-from api.database import pgdb
+from api.database import get_db
+from databases import Database
 from datetime import datetime, timezone
 from passlib.context import CryptContext
 from api.router.user.user import UserOut, get_user_by_username
@@ -22,6 +23,10 @@ class UserLogin(BaseModel):
     
 class UserCreate(UserLogin):
     email: str
+    
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 responses = {
     status.HTTP_400_BAD_REQUEST: {"description": "Invalid request"},
@@ -30,13 +35,13 @@ responses = {
 }
 
 ## register a new user
-@router.post("/register/",
+@router.post("/register",
              response_model = UserOut,
              responses = {**responses},
              status_code = status.HTTP_201_CREATED,
              description = "Register a new user",
              tags = ["Auth"])
-async def register_user(user: UserCreate):
+async def register_user(user: UserCreate, pgdb = Depends(get_db)):
     query = ("INSERT INTO tbl_user (username, password, email) "
              "VALUES (:username, :password, :email) "
              "RETURNING uu_id::text, username, email ")
@@ -50,14 +55,14 @@ async def register_user(user: UserCreate):
                             detail="Username or email already exists")
        
        
-@router.post("/login/",
-        response_model=UserOut,
+@router.post("/login",
+        response_model=Token,
         responses = {**responses},
         status_code = status.HTTP_200_OK,
         description = "Login an already registered user",
         tags = ["Auth"])
-async def login(user: UserLogin):
-    user_db= get_user_by_username(user.username)
+async def login(user: UserLogin, pgdb: Database = Depends(get_db)):
+    user_db = await obtain_credentials(user.username, pgdb)
     if not user_db or not pwd_context.verify(user.password, user_db["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -78,3 +83,10 @@ async def login(user: UserLogin):
             tags = ["Auth"])
 async def read_current_user(current_user: UserOut = Depends(get_current_user)):
     return current_user
+
+
+async def obtain_credentials (username:str, pgdb: Database = Depends(get_db)):
+    query = ("SELECT uu_id, username, password "
+             "FROM tbl_user "
+             "WHERE username = :username")
+    return await pgdb.fetch_one(query=query, values={"username": username})

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends
 from pydantic import BaseModel, Field 
-from api.database import pgdb
+from api.database import get_db
 from uuid import UUID
 
 class UserOut(BaseModel):
@@ -20,12 +20,12 @@ router = APIRouter()
 # GET{id}: get user by id
 # DELETE{id}: delete user by id (non necessario)
 
-@router.get("/byID/{uu_id}",
+@router.get("/by-id/{uu_id}",
             response_model= UserOut,
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get user by id")
-async def get_user_by_id(uu_id: UUID):
+async def get_user_by_id(uu_id: UUID, pgdb = Depends(get_db)):
     query = ("SELECT uu_id::text, email, username "
             "FROM tbl_user "
             "WHERE uu_id = :uu_id ")
@@ -39,18 +39,18 @@ async def get_user_by_id(uu_id: UUID):
     except HTTPException:
         raise
     except Exception as ex:
-        print("ERROR: {ex}")
+        print(f"ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             detail="Internal server error")
         
         
-@router.get("/byUsername/{username}",
+@router.get("/by-username/{username}",
             response_model= UserOut,
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get user by username")
-async def get_user_by_username(username: str):
+async def get_user_by_username(username: str, pgdb = Depends(get_db)):
     query = ("SELECT uu_id::text, email, username "
             "FROM tbl_user "
             "WHERE username = :username ")
@@ -64,7 +64,7 @@ async def get_user_by_username(username: str):
     except HTTPException:
         raise
     except Exception as ex:
-        print("ERROR: {ex}")
+        print(f"ERROR: {ex}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error")

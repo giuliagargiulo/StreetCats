@@ -1,7 +1,7 @@
 services:
   pgdb:
     image: postgres:17
-    restart: unless-stopped
+    restart: unless-stopped 
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -10,6 +10,9 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backend/api/router/user/user.sql:/docker-entrypoint-initdb.d/1-user.sql
+      - ./backend/api/router/cat/cat.sql:/docker-entrypoint-initdb.d/2-cat.sql
+      - ./backend/api/router/comment/comment.sql:/docker-entrypoint-initdb.d/3-comment.sql
 
 
   backend:
