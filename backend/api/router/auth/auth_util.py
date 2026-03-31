@@ -9,7 +9,6 @@ from api.router.user.user import get_user_by_username
 
 
 SECRET_KEY = os.getenv("SECRET_KEY", "96c56e28b8804518ed5a5f094b66edb7a0b2138172314f514db53cc5728dfaa6")
-print(f"SECRET_KEY: {SECRET_KEY}")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

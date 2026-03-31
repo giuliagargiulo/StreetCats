@@ -14,6 +14,15 @@ services:
       - ./backend/api/router/cat/cat.sql:/docker-entrypoint-initdb.d/2-cat.sql
       - ./backend/api/router/comment/comment.sql:/docker-entrypoint-initdb.d/3-comment.sql
 
+# DA USARE PER LA CONSEGNA
+  # frontend:
+  #   build: ./frontend
+  #   container_name: frontend
+  #   restart: always
+  #   ports:
+  #     - "4200:80"
+  #   depends_on:
+  #     - backend
 
   backend:
     build:
@@ -30,8 +39,6 @@ services:
     #  - FILES_DIR=/app/files
     #volumes:
     #  - ./files:/app/files
-
-  #frontend:
 
 volumes:
   pgdata:

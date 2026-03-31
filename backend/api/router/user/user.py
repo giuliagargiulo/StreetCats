@@ -68,3 +68,4 @@ async def get_user_by_username(username: str, pgdb = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error")
+
