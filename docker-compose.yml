@@ -14,7 +14,8 @@ services:
       - ./backend/api/router/cat/cat.sql:/docker-entrypoint-initdb.d/2-cat.sql
       - ./backend/api/router/comment/comment.sql:/docker-entrypoint-initdb.d/3-comment.sql
 
-# DA USARE PER LA CONSEGNA
+# DA USARE PER LA CONSEGNA 
+# (devo selezionare la versione di angular e node usata nel corso)
   # frontend:
   #   build: ./frontend
   #   container_name: frontend
