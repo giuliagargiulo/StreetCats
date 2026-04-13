@@ -1,0 +1,31 @@
+.hero {
+  text-align: center;
+  padding: 30px 20px;
+  background: #F97D24;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 10px auto;
+  color: white;
+}
+
+.actions button {
+  margin: 15px;
+  padding: 10px 25px;
+  color: #374151;
+  background: #FFF7ED;
+  border:#FFF7ED;
+  border-radius: 8px;
+}
+
+.actions button:hover {
+  background: #FDE68A;
+  color: #374151;
+  cursor: pointer;
+}

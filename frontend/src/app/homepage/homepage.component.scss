@@ -1,0 +1,31 @@
+.map-wrapper {
+  position: relative;
+}
+
+.add-button {
+  background: #F97316;
+  border: none;
+  width: 84%;
+  height: auto;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  background: #F97D24;
+  border:#F97D24;
+  padding: 10px 25px;
+  border-radius:8px;
+}
+
+button:hover.add-button{
+  background: #FCA65F;
+  cursor: pointer;
+}
+
+.add-cat-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF7ED;
+  padding: 30px 30px;
+}
+
