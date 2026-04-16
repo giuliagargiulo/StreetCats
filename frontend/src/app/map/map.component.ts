@@ -1,18 +1,32 @@
 import { AfterViewInit, Component } from '@angular/core';
 import * as L from 'leaflet';
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit {
 
+export class MapComponent implements AfterViewInit {
+//   ngAfterViewInit(): void {
+//     const map = L.map('map').setView([51.505, -0.09], 13);
+
+//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//       attribution: '&copy; OpenStreetMap contributors'
+//     }).addTo(map);
+//   }
+// }
+
+  private map!: L.Map;
   ngAfterViewInit(): void {
-    const map = L.map('map').setView([51.505, -0.09], 13);
+    this.initMap();
+  }
+
+  private initMap(): void {
+    this.map = L.map('map').setView([40.8518, 14.2681], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    }).addTo(this.map);
   }
 }
+
