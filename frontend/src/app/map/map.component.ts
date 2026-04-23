@@ -17,8 +17,13 @@ export class MapComponent implements AfterViewInit {
 // }
 
   private map!: L.Map;
+
   ngAfterViewInit(): void {
     this.initMap();
+
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 0);
   }
 
   private initMap(): void {

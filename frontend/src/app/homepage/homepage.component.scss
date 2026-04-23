@@ -1,6 +1,7 @@
-// .map-wrapper {
-//   position: relative;
-// }
+#map {
+  height: 700px;
+  width: 100%;
+}
 
 // .add-cat-section{
 //   display: flex;
@@ -10,4 +11,23 @@
 //   padding: 30px 30px;
 // }
 
+#add-button{
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  background: #F97316;
+  border: none;
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  background: #F97D24;
+  border-radius:50%;
+}
 
+button:hover#add-button{
+  background: #FCA65F;
+  cursor: pointer;
+}

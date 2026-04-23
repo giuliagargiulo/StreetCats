@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<section class="add-cat-section">
+  <h1 class="title">Have you seen a cat recently? Add a new sighting!</h1>
+  <div class="card">
+    <form>
+
+      <div class="left">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="image">Upload image</label>
+          <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+      </div>
+
+      <div class="right">
+        <p class="map-text">Click on the map to select location 📍</p>
+        <app-map id="add-cat-map"></app-map>
+      </div>
+
+      <button id="submit">Confirm</button>
+
+    </form>
+  </div>
+</section>
+<app-footer></app-footer>
