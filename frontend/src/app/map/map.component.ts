@@ -1,20 +1,20 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-map',
+  imports: [CommonModule],
+  standalone: true,
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-
 export class MapComponent implements AfterViewInit {
-//   ngAfterViewInit(): void {
-//     const map = L.map('map').setView([51.505, -0.09], 13);
 
-//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//       attribution: '&copy; OpenStreetMap contributors'
-//     }).addTo(map);
-//   }
-// }
+  @Input() size: 'small' | 'large' = 'large';
+
+  @ViewChild('mapContainer', { static: true })
+  mapContainer!: ElementRef;
 
   private map!: L.Map;
 
@@ -23,11 +23,12 @@ export class MapComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.map.invalidateSize();
-    }, 0);
+    }, 200);
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([40.8518, 14.2681], 13);
+    this.map = L.map(this.mapContainer.nativeElement)
+      .setView([40.8518, 14.2681], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'

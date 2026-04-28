@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntroComponent } from './intro.component';
+import { CatDetailsPageComponent } from './cat-details-page.component';
 
-describe('IntroComponent', () => {
-  let component: IntroComponent;
-  let fixture: ComponentFixture<IntroComponent>;
+describe('CatDetailsPageComponent', () => {
+  let component: CatDetailsPageComponent;
+  let fixture: ComponentFixture<CatDetailsPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IntroComponent]
+      imports: [CatDetailsPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IntroComponent);
+    fixture = TestBed.createComponent(CatDetailsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
