@@ -1,85 +1,4 @@
 
-// .logo{
-//   width: 100px;
-//   height: auto;
-//   margin-bottom: 10px;
-// }
-
-// #login-section {
-//   height: 100vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: column;
-//   font-size: 16px;
-//   color: #374151;
-//   background-color: #FDE68A;
-// }
-
-// .login-card {
-//   background: #FFF7ED;
-//   padding: 30px;
-//   border-radius: 12px;
-//   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-//   width: 100%;
-//   max-width: 400px;
-//   text-align: center;
-// }
-
-// form {
-//   width: 100%;
-//   text-align: left;
-// }
-
-// .form-group{
-//   display: flex;
-//   flex-direction: column;
-//   align-items: flex-start;
-//   justify-content: center;
-// }
-
-// label{
-//   margin-bottom: 5px;
-//   display: flex;
-//   align-items: flex-start;
-// }
-
-// input {
-//   width: 100%;
-//   padding: 10px;
-//   margin: 10px 0;
-//   border: 1px solid #ddd;
-//   border-radius: 8px;
-// }
-
-// a{
-//   color: #F97316;
-//   text-decoration: none;
-// }
-
-// a:hover{
-//   color: #FB923C;
-// }
-
-// #submit{
-//   background-color: #F97316;
-//   width: 100%;
-//   height: 40px;
-//   padding: 10px;
-//   color: white;
-//   border: none;
-//   background: #F97D24;
-//   border:#F97D24;
-//   border-radius: 8px;
-//   font-size: 15px;
-//   cursor: pointer;
-// }
-
-// #submit:hover{
-//   background: #FCA65F;
-//   cursor: pointer;
-// }
-
 #login-section {
   color: #374151;
   height: 100vh;
@@ -87,10 +6,8 @@
   justify-content: center;
   align-items: center;
   background: #FAFAFA;
-  // background: linear-gradient(135deg, #FB923C, #FDE68A);
   font-family: 'Poppins', sans-serif;
 }
-
 
 .login-card {
   background: white;
