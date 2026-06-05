@@ -11,4 +11,3 @@ CREATE TABLE IF NOT EXISTS tbl_cat(
 ALTER TABLE tbl_cat ADD CONSTRAINT tbl_cat_unique_uu_id UNIQUE (uu_id);
 ALTER TABLE tbl_cat ADD CONSTRAINT tbl_cat_fk_user_uu_id FOREIGN KEY (user_uu_id) REFERENCES tbl_user(uu_id) ON DELETE CASCADE;
 
-

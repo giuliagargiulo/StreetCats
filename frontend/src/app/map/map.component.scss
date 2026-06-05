@@ -1,24 +1,20 @@
-// #map {
-//   height: 700px;
-//   width: 100%;
-// }
-
-// .map-section {
-//   position:relative;
-//   display: flex;
-//   justify-content: center;
-//   background: #FFF7ED;
-// }
-
 .map {
-  width: 100%;
   border-radius: 12px;
   overflow: hidden;
   min-height: 300px;
+  border-radius: 20px;
+}
+
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .large {
-  height: 700px;
+  width: 90%;
+  height: 600px;
 }
 
 .small {

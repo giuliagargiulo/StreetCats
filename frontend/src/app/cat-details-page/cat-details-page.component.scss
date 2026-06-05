@@ -35,6 +35,14 @@ section {
   font-family: 'Poppins', sans-serif;
 }
 
+section.cat-details {
+  margin-top: 40px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
 /* TITLE */
 .title-data {
   margin-bottom: 20px;
@@ -52,7 +60,7 @@ section {
 }
 
 /* IMAGE + MAP CARD */
-.image-map {
+.image-map{
   display: flex;
   gap: 20px;
   background: white;
