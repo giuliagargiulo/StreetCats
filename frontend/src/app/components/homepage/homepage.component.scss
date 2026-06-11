@@ -1,0 +1,234 @@
+// SECTIONS
+.intro-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  min-height: 500px;
+  padding: 40px 0px;
+  background: #FEF7EE;
+}
+
+.cat-image {
+  width: 100%;
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.left-side{
+  max-width: 50%;
+  justify-content: left;
+  text-align: left;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.right-side {
+  position: relative;
+  max-width: 50%;
+  justify-content: right;
+  text-align: center;
+  background: #FEF7EE;
+  margin-right: 10px;
+}
+
+.right-side div{
+  position: absolute;
+  text-align: right;
+  bottom: 25px;
+  left: 25px;
+  background: RGB(253, 232, 138, 0.9);
+  border-radius: 12px;
+  width: 40%;
+  p{
+    font-size: 1rem;
+    padding: 0px 15px;
+  }
+}
+
+div .marker{
+  position:absolute;
+  bottom: 7px;
+  left: 12px;
+  width: 35px;
+  height: 35px;
+}
+
+#map{
+  text-align: left;
+  padding: 5px 50px 50px;
+}
+
+.community-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  background: #FEF7EE;
+}
+
+#join-community{
+  width: 90%;
+  p{
+    color:white;
+    max-width: 80%;
+  }
+  h2{
+    color:white;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 30px;
+  background: RGB(249, 115, 22);
+  text-align: left;
+}
+
+.map-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+//BUTTONS
+#add-button{
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  background: #F97316;
+  border: none;
+  width: 65px;
+  height: 65px;
+  font-size: 22px;
+  cursor: pointer;
+  color: white;
+  background: #F97D24;
+  border-radius:50%;
+}
+
+button:hover#add-button{
+  background: #FCA65F;
+  cursor: pointer;
+}
+
+button {
+  width: 200px;
+  height: 75px;
+  font-size: 18px;
+  margin: 15px;
+  padding: 10px 25px;
+  color: white;
+  background: #F97D24;
+  border:#F97D24;
+  border-radius: 50px;
+}
+
+button:hover {
+  background: #FCA65F;
+  cursor: pointer;
+}
+
+.yellow-button{
+  background: #FEF7EE;
+  color: #F97D24;
+  border:#F97D24 2px solid;
+}
+
+
+.yellow-button:hover{
+  background: #FDE68A;
+  cursor: pointer;
+}
+
+// TEXT
+h1{
+  font-size: 3rem;
+  color: #374151;
+}
+
+h2{
+  font-size: 2.5rem;
+  color: #374151;
+}
+
+p{
+  font-size: 1.5rem;
+  color: #374151;
+}
+
+@media screen and (max-width: 768px) {
+
+  .intro-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .left-side,
+  .right-side {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+  }
+
+  .cat-image {
+    width: 100%;
+    max-width: 450px;
+    max-height: 450px;
+    height: auto;
+  }
+
+  .right-side div {
+    width: 50%;
+    left: 15px;
+    bottom: 15px;
+  }
+
+#map {
+    padding: 20px;
+  }
+
+  .community-section {
+    padding: 20px;
+  }
+
+  #join-community {
+    width: 100%;
+    padding: 25px;
+    box-sizing: border-box;
+  }
+
+  .actions{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    max-width: 200px;
+    max-height: 75px;
+    margin: 10px 10px;
+  }
+}
+
+h1{
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+h2{
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+p{
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+

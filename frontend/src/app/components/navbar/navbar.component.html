@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <div class="left">
+    <div class="logo" routerLink="/">
+      <img src="../../assets/logo2.png" alt="Logo">
+    </div>
+  </div>
+
+  <div class="center nav-links" [class.active]="isMenuOpen">
+      <a routerLink="/" fragment="map" (click)="closeMenu()">Map</a>
+      <a routerLink="/add-cat" (click)="closeMenu()">Add Sighting</a>
+  </div>
+
+  <div class="right nav-buttons" [class.active]="isMenuOpen">
+      <button routerLink="/login" (click)="closeMenu()">Login</button>
+      <button routerLink="/register" (click)="closeMenu()">Sign Up</button>
+  </div>
+
+  <!-- MENU MOBILE -->
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+
+  <div class="mobile-menu" [class.active]="isMenuOpen">
+    <a routerLink="/" fragment="map" (click)="closeMenu()">Map</a>
+    <a routerLink="/add-cat" (click)="closeMenu()">Add Sighting</a>
+    <a routerLink="/login" (click)="closeMenu()">Login</a>
+    <a routerLink="/register" (click)="closeMenu()">Sign Up</a>
+  </div>
+</nav>
+

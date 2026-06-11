@@ -1,0 +1,178 @@
+.cat-details{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  background: #FAFAFA;
+}
+
+.intro {
+  background: #FAFAFA;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px 40px;
+  border-radius: 16px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* HEADER: titolo + data a sinistra */
+.header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* IMMAGINE SIZE */
+.cat-image {
+  width: 100%;
+  max-width: 840px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* DESCRIZIONE ALLINEATA A SINISTRA */
+.description {
+  text-align: left;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #374151;
+  margin-bottom: 0px;
+}
+
+.date {
+  color: #596275;
+  font-size: 1rem;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #374151;
+}
+
+p {
+  color: #374151;
+}
+
+.comments-section {
+  width: 350px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-right: 20px;
+  padding: 60px 40px;
+  background: RGB(253, 230, 138, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* COMMENT */
+.comment {
+  padding: 10px 20px;
+  border-bottom: 1px solid #E5E7EB;
+  background: #FAFAFA;
+  border-radius: 16px;
+  margin-bottom: 5px;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.add-comment{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+textarea{
+  resize: none !important;
+  width: 280px;
+  height: 100px;
+  margin-top: 40px;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color:#374151;
+  padding: 10px 20px;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  background: #FAFAFA;
+}
+
+textarea::placeholder {
+  color: #374151;
+  font-size: 1rem;
+}
+
+button {
+  width: 170px;
+  height: 55px;
+  font-size: 18px;
+  margin-top: 15px;
+  padding: 10px 25px;
+  color: white;
+  background: #F97D24;
+  border:#F97D24;
+  border-radius: 25px;
+}
+
+button:hover {
+  background: #FCA65F;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1350px) {
+
+  .cat-details {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 40px;
+  }
+
+  .intro {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 10px;
+    padding: 20px;
+  }
+
+  .cat-image {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+  }
+
+  .comments-section {
+    width: 100%;
+    margin: 0px 10px 40px;
+    padding: 20px;
+  }
+
+  textarea {
+    width: 90%;
+    height: 100px;
+  }
+
+  .add-comment {
+    align-items: flex-end;
+  }
+
+  button {
+    width: 100%;
+    max-width: 220px;
+    align-self: flex-end;
+  }
+}

@@ -34,6 +34,8 @@
               }
             ],
             "styles": [
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/quill/dist/quill.bubble.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
@@ -96,6 +98,8 @@
               }
             ],
             "styles": [
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/quill/dist/quill.bubble.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],

@@ -1,0 +1,48 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 20px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+a {
+  text-decoration: none;
+  color: #F97316;
+  transition: color 0.2s ease;
+  font-size: 18px;
+  padding: 0px 25px;
+}
+
+a:hover {
+  color: #FDE68A;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+  }
+
+  a {
+    padding: 10px 0;
+    font-size: 16px;
+  }
+
+  .github svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .contacts,
+  .back-to-top,
+  .github {
+    display: flex;
+    justify-content: center;
+  }
+}

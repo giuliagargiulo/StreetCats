@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<section class="add-cat-section">
+  <div class="card">
+    <div class="title">
+      <h1>Add a new sighting</h1>
+      <p>Have you seen a cat recently? Help the community keep track of our feline friends.</p>
+    </div>
+
+  <form [formGroup]="addCatForm" (ngSubmit)="onSubmit()">
+    <div class="photo">
+        <h3>1. Upload image</h3>
+        <label for="image" class="upload-box">
+          <span>📷 Click here to upload an image</span>
+        </label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)">
+    </div>
+
+    <div class="location">
+      <h3>2. Click on the map to select location</h3>
+      <app-map size="small" (locationSelected)="onLocationSelected($event)" [isClickable]="true"></app-map>
+    </div>
+    <div class="form-group">
+      <h3>3. Details</h3>
+        <label for="title">Title</label>
+        <input type="text" formControlName="title">
+        <label for="description">Description</label>
+        <quill-editor theme="snow" [modules]="modules" placeholder="Describe the cat..." type="text" formControlName="description"></quill-editor>
+    </div>
+    <button type="submit">Confirm</button>
+  </form>
+</div>
+</section>
+<app-footer></app-footer>

@@ -1,0 +1,57 @@
+.map {
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 300px;
+  border-radius: 20px;
+}
+
+section{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.large {
+  width: clamp(320px, 85vw, 1200px);
+  aspect-ratio: 16 / 8;
+}
+
+.medium{
+  width: clamp(320px, 85vw, 980px);
+  aspect-ratio: 16 / 9;
+  // height: 450px;
+  // width: 980px;
+}
+
+.small{
+  width: clamp(320px, 85vw, 700px);
+  aspect-ratio: 16 / 9;
+  // height: 400px;
+  // width: 700px;
+}
+
+
+
+// FOR SQUARE MAP
+
+// .small {
+//   height: 500px;
+//   aspect-ratio: 1 / 1;
+//   position: relative;
+// }
+
+// .small::before {
+//   content: "";
+//   display: block;
+//   padding-bottom: 100%;
+// }
+
+// .small > * {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// }

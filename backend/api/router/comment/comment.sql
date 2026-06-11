@@ -11,3 +11,5 @@ ALTER TABLE tbl_comment ADD CONSTRAINT tbl_comment_fk_cat_uu_id FOREIGN KEY (cat
 ALTER TABLE tbl_comment ADD CONSTRAINT tbl_comment_fk_user_uu_id FOREIGN KEY (user_uu_id) REFERENCES tbl_user(uu_id) ON DELETE CASCADE;
 
 
+-- INSERT INTO tbl_comment(cat_uu_id, user_uu_id, content) VALUES
+-- ()

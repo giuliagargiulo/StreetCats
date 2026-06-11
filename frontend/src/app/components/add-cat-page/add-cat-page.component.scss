@@ -1,0 +1,170 @@
+.add-cat-section{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #FAFAFA;
+  min-height: 100vh;
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding: 40px;
+  gap: 20px;
+}
+
+.photo,
+.location,
+.form-group{
+  background: white;
+  border-radius: 20px;
+  padding: 5px 30px 30px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.title h1,
+.title p {
+  margin: 0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.upload-box {
+  width: 100%;
+  height: 250px;
+  border: 2px dashed RGB(249, 115, 22, 0.7);
+  border-radius: 12px;
+  background: #FAFAFA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.upload-box:hover {
+  background: #FFEDD5;
+  border-color: #FB923C;
+}
+
+.upload-box span {
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+label {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #374151;
+}
+
+input{
+  padding: 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: 0.2s;
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #F97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+
+[type=submit] {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: #F97316;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+[type=submit]:hover {
+  background: #FB923C;
+}
+
+@media (max-width: 768px) {
+  form {
+    flex-direction: column;
+  }
+}
+
+h1{
+  font-size: 3rem;
+  color: #374151;
+}
+
+h2{
+  font-size: 2.5rem;
+  color: #374151;
+}
+
+h3{
+  font-size: 1.5rem;
+  color: #374151;
+}
+
+p{
+  font-size: 1.2rem;
+  color: #374151;
+}
+
+:host ::ng-deep .ql-toolbar.ql-snow,
+:host ::ng-deep .ql-container.ql-snow {
+  padding: 0px;
+  border: 1px solid #E5E7EB;
+}
+
+:host ::ng-deep .ql-toolbar.ql-snow{
+  height: 30px;
+  border-top:none;
+  border-left: none;
+  border-right:none;
+}
+
+:host ::ng-deep .ql-container.ql-snow{
+  border: none !important;
+}
+
+quill-editor {
+  height: 150px;
+  padding: 0px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  margin-bottom: 30px;
+}
+
+quill-editor:focus-within {
+  border-color: #F97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15);
+}

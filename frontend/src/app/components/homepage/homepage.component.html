@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+
+<section class="intro-section">
+  <section class="left-side">
+    <h1> Every cat deserves a home!</h1>
+    <p>
+      Discover and share sightings of stray cats in your area.
+      Help your community care for them or reunite lost cats with their owners 🐾
+    </p>
+    <div>
+      <button (click)="scrollToMap()">Explore the map</button>
+      <button class="yellow-button" routerLink="/add-cat">Add a new cat</button>
+    </div>
+  </section>
+  <section class="right-side">
+    <img src="assets/molly.jpg" alt="Molly the cat" class="cat-image">
+    <div>
+      <p>Latest Cat Sightings</p>
+      <img src="assets/location-marker.png" alt="location marker" class="marker">
+    </div>
+  </section>
+</section>
+
+<section id="map">
+  <h2> Explore the sightings </h2>
+  <p> Discover through the map where cats have been spotted. </p>
+  <div class="map-wrapper">
+    <app-map size="large" [cats]="cats">
+      <button id="add-button" routerLink="/add-cat"> + </button>
+    </app-map>
+  </div>
+</section>
+
+<section class="community-section">
+  <section id="join-community">
+    <h2>Join Our Community!</h2>
+    <p>
+      Become a part of our cat-loving community! Share your sightings,
+      connect with fellow cat enthusiasts, and help us create a safer environment for our feline friends.
+    </p>
+    <div class="actions">
+      <button class="yellow-button" routerLink="/register">Register now</button>
+      <button class="yellow-button" routerLink="/login">Login</button>
+    </div>
+  </section>
+</section>
+<app-footer></app-footer>
+
