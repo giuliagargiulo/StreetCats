@@ -38,19 +38,37 @@ export class AddCatPageComponent {
   }
 
   selectedFile: File | null = null;
+  imagePreview: string | null = null;
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (!input.files || input.files.length === 0) {
       return;
     }
-
     this.selectedFile = input.files[0];
     this.addCatForm.patchValue({
       image: this.selectedFile
     });
+    this.addCatForm.get('image')?.updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(this.selectedFile);
   }
+
+  // onFileSelected(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+
+  //   if (!input.files || input.files.length === 0) {
+  //     return;
+  //   }
+
+  //   this.selectedFile = input.files[0];
+  //   this.addCatForm.patchValue({
+  //     image: this.selectedFile
+  //   });
+  // }
 
   // onSubmit() {
   //   if (this.addCatForm.invalid) return;
@@ -107,5 +125,4 @@ export class AddCatPageComponent {
     });
     console.log(location);
   }
-
 }

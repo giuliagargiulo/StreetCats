@@ -8,13 +8,17 @@
 
   <form [formGroup]="addCatForm" (ngSubmit)="onSubmit()">
     <div class="photo">
-        <h3>1. Upload image</h3>
-        <label for="image" class="upload-box">
-          <span>📷 Click here to upload an image</span>
-        </label>
-        <input type="file" accept="image/*" (change)="onFileSelected($event)">
+      <h3>1. Upload image</h3>
+      <label for="image" class="upload-box">
+        @if (imagePreview) {
+          <img [src]="imagePreview" alt="Selected image preview" class="preview-image">
+        } @else {
+        <span>📷 Click here to upload an image</span>
+        }
+       </label>
+      <input id="image" type="file" accept="image/*"
+          (change)="onFileSelected($event)" hidden>
     </div>
-
     <div class="location">
       <h3>2. Click on the map to select location</h3>
       <app-map size="small" (locationSelected)="onLocationSelected($event)" [isClickable]="true"></app-map>
