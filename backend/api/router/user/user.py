@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from pydantic import BaseModel, Field 
 from api.database import get_db
+from databases import Database
 from uuid import UUID
 
 class UserOut(BaseModel):
@@ -15,6 +16,14 @@ responses = {
 
 router = APIRouter()
 
+async def fetch_user_by_username(username: str, pgdb: Database):
+    query = (
+        "SELECT uu_id::text, email, username "
+        "FROM tbl_user "
+        "WHERE username = :username "
+    )
+    return await pgdb.fetch_one(query=query, values={"username": username})
+
 # ROUTES
 # GET{username} : get user by username
 # GET{id}: get user by id
@@ -25,7 +34,7 @@ router = APIRouter()
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get user by id")
-async def get_user_by_id(uu_id: UUID, pgdb = Depends(get_db)):
+async def get_user_by_id(uu_id: UUID, pgdb: Database = Depends(get_db)):
     query = ("SELECT uu_id::text, email, username "
             "FROM tbl_user "
             "WHERE uu_id = :uu_id ")
@@ -50,13 +59,13 @@ async def get_user_by_id(uu_id: UUID, pgdb = Depends(get_db)):
             responses = {**responses},
             status_code=status.HTTP_200_OK,
             description = "Get user by username")
-async def get_user_by_username(username: str, pgdb = Depends(get_db)):
+async def get_user_by_username(username: str, pgdb: Database = Depends(get_db)):
     query = ("SELECT uu_id::text, email, username "
             "FROM tbl_user "
             "WHERE username = :username ")
     q_data= {"username": username}
     try:
-        res = await pgdb.fetch_one(query=query, values=q_data)
+        res = await fetch_user_by_username(username, pgdb)
         if not res:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
@@ -68,4 +77,3 @@ async def get_user_by_username(username: str, pgdb = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error")
-

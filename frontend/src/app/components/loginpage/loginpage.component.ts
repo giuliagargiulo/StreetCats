@@ -3,7 +3,8 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { AuthResponse } from '../../models/user';
 
 @Component({
   selector: 'app-loginpage',
@@ -18,7 +19,7 @@ export class LoginpageComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -28,13 +29,17 @@ export class LoginpageComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
     const payload = this.loginForm.value;
-    this.http.post<any>('http://localhost:3000/auth/login', payload)
-      .subscribe({
+
+    this.authService.login(payload).subscribe({
         next: (res) => {
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/home']);
+          localStorage.setItem('token', res.access_token);
+          alert('Login success!');
+          this.router.navigate(['']);
         },
         error: (err) => {
           console.error('Login error:', err);

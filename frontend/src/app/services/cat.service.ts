@@ -7,12 +7,12 @@ import { Cat } from '../models/cat';
   providedIn: 'root'
 })
 export class CatService {
-  private apiUrl = 'http://localhost:3000/api/cats';
+  private apiUrl = 'http://localhost:8000/cat';
 
   constructor(private http: HttpClient) {}
 
   getCats(): Observable<Cat[]> {
-    return this.http.get<Cat[]>(this.apiUrl);
+    return this.http.get<Cat[]>(`${this.apiUrl}/all`);
   }
 
   getCatById(id: string): Observable<Cat> {
@@ -20,15 +20,10 @@ export class CatService {
   }
 
   createCat(cat: FormData): Observable<Cat> {
-    return this.http.post<Cat>(this.apiUrl, cat);
+    return this.http.post<Cat>(`${this.apiUrl}/new-cat`, cat);
   }
 
-  deleteCat(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  // getCommentsByCat(id:string): Observable<void> {
-  //  return
+  // deleteCat(id: number): Observable<void> {
+  //   return this.http.delete<void>(`${this.apiUrl}/${id}`);
   // }
-
 }

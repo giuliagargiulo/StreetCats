@@ -75,10 +75,52 @@
 
 </section>
 
-<template #loadingTemplate>
-  <div class="loading-spinner">
-    <p>Caricamento dei dettagli del gatto in corso...</p>
-  </div>
-</template>
+<ng-template #loadingTemplate>
+  <section class="cat-details">
+
+    <div class="intro">
+
+      <div class="header">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-date"></div>
+      </div>
+
+      <div class="image">
+        <div class="skeleton cat-image"></div>
+      </div>
+
+      <div class="description">
+        <div class="skeleton skeleton-title-small"></div> <div class="skeleton skeleton-text-line"></div>
+        <div class="skeleton skeleton-text-line"></div>
+        <div class="skeleton skeleton-text-line short"></div>
+      </div>
+
+      <div id="map-container">
+        <div class="skeleton skeleton-map"></div>
+      </div>
+
+    </div>
+
+    <div class="comments-section">
+
+      <div class="skeleton skeleton-comments-title"></div> <div class="comment">
+        <div class="skeleton skeleton-comment-author"></div>
+        <div class="skeleton skeleton-comment-text"></div>
+      </div>
+
+      <div class="comment">
+        <div class="skeleton skeleton-comment-author"></div>
+        <div class="skeleton skeleton-comment-text"></div>
+      </div>
+
+      <div class="add-comment">
+        <div class="skeleton skeleton-textarea"></div>
+        <div class="skeleton skeleton-button"></div>
+      </div>
+
+    </div>
+
+  </section>
+</ng-template>
 
 <app-footer></app-footer>

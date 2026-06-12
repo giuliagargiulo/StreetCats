@@ -3,14 +3,8 @@ import databases
 
 DATABASE_URL = os.getenv("DATABASE_URL", "got nothing")
 
-pgdb = databases.Database(DATABASE_URL)
+database = databases.Database(DATABASE_URL)
 
 async def get_db():
-    if not pgdb.is_connected:
-        await pgdb.connect()
-    try:
-        yield pgdb
-    finally:
-        if pgdb.is_connected:
-            await pgdb.disconnect()
+    yield database
             

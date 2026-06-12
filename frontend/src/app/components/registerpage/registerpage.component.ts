@@ -3,7 +3,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { RouterLink, Router} from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service'; // Assicurati che il percorso sia corretto
 
 @Component({
   selector: 'app-registerpage',
@@ -18,7 +18,7 @@ export class RegisterpageComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) {
     this.registerForm = this.fb.group({
@@ -29,7 +29,6 @@ export class RegisterpageComponent {
   }
 
   onSubmit(): void {
-
     this.errorMessage = '';
 
     if (this.registerForm.invalid) {
@@ -37,14 +36,9 @@ export class RegisterpageComponent {
       return;
     }
 
-    const payload = {
-      email: this.registerForm.value.email,
-      username: this.registerForm.value.username,
-      password: this.registerForm.value.password
-    };
+    const payload = this.registerForm.value;
 
-    this.http.post('http://localhost:3000/auth/register', payload)
-      .subscribe({
+    this.authService.register(payload).subscribe({
         next: (user) => {
           console.log('User created:', user);
           alert('Registration completed successfully!');
@@ -52,7 +46,8 @@ export class RegisterpageComponent {
         },
         error: (err) => {
           console.error('Register error:', err);
-          alert('An error occurred during registration.');
+          this.errorMessage = 'An error occurred during registration.';
+          alert(this.errorMessage);
         }
       });
   }

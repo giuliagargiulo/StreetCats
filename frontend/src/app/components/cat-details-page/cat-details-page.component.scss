@@ -14,6 +14,7 @@
   margin-right: 20px;
   padding: 20px 40px;
   border-radius: 16px;
+  width: 100%;
   max-width: 800px;
   display: flex;
   flex-direction: column;
@@ -21,7 +22,6 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* HEADER: titolo + data a sinistra */
 .header {
   text-align: left;
   margin-bottom: 20px;
@@ -174,5 +174,101 @@ button:hover {
     width: 100%;
     max-width: 220px;
     align-self: flex-end;
+  }
+}
+
+/* =========================================
+   SKELETON LOADER
+   ========================================= */
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #E5E7EB 25%, #F3F4F6 50%, #E5E7EB 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 6px;
+}
+
+// --- Elementi Testuali ---
+.skeleton-title {
+  height: 2.5rem;
+  width: 65%;
+  margin-bottom: 10px;
+}
+
+.skeleton-title-small {
+  height: 1.5rem;
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+.skeleton-date {
+  height: 1rem;
+  width: 25%;
+}
+
+.skeleton-text-line {
+  height: 1.1rem;
+  width: 100%;
+  margin-bottom: 10px;
+
+  &.short {
+    width: 75%;
+  }
+}
+
+// --- Mappa ---
+.skeleton-map {
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+// --- Commenti ---
+.skeleton-comments-title {
+  height: 2rem;
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+.skeleton-comment-author {
+  height: 1rem;
+  width: 100px;
+  margin-bottom: 8px;
+}
+
+.skeleton-comment-text {
+  height: 1rem;
+  width: 85%;
+}
+
+// --- Finti controlli form (Stesse tue misure) ---
+.skeleton-textarea {
+  width: 280px;
+  height: 100px;
+  margin-top: 40px;
+  margin-bottom: 5px;
+  border-radius: 16px;
+}
+
+.skeleton-button {
+  width: 170px;
+  height: 55px;
+  margin-top: 15px;
+  border-radius: 25px;
+}
+
+// Media Query per far rimpicciolire i finti input esattamente come i veri
+@media screen and (max-width: 1350px) {
+  .skeleton-textarea {
+    width: 90%;
+  }
+  .skeleton-button {
+    width: 100%;
+    max-width: 220px;
   }
 }

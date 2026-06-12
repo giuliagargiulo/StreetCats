@@ -85,8 +85,10 @@ async def read_current_user(current_user: UserOut = Depends(get_current_user)):
     return current_user
 
 
-async def obtain_credentials (username:str, pgdb: Database = Depends(get_db)):
-    query = ("SELECT uu_id, username, password "
-             "FROM tbl_user "
-             "WHERE username = :username")
+async def obtain_credentials(username: str, pgdb: Database):
+    query = (
+        "SELECT uu_id, username, password "
+        "FROM tbl_user "
+        "WHERE username = :username"
+    )
     return await pgdb.fetch_one(query=query, values={"username": username})
