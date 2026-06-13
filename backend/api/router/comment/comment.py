@@ -13,12 +13,13 @@ class CommentIn(BaseModel):
     cat_uu_id: UUID = Field(..., title="UUID of the cat post",
                             example="550e8400-e29b-41d4-a716-446655440000")
 
-
 class CommentOut(CommentIn):
     uu_id: UUID = Field(..., title="UUID of the comment",
                         example="770e8400-e29b-41d4-a716-446655440222")
     created_at: datetime = Field(..., title="Creation date of the comment",
                                  example="2025-02-22T14:30:00Z")
+    username: str = Field(..., title="Username of the user that posted the comment",
+                             example="giulia28")
 
 
 responses = {
@@ -42,10 +43,11 @@ router = APIRouter(
             status_code=status.HTTP_200_OK,
             description="Get all comments of a cat post in descending order of creation")
 async def get_comments_by_cat(cat_uu_id: UUID, pgdb: Database = Depends(get_db)):
-    query = ("SELECT uu_id::text, content, cat_uu_id::text, user_uu_id::text, created_at "
-             "FROM tbl_comment "
-             "WHERE cat_uu_id = :cat_uu_id "
-             "ORDER BY created_at DESC")
+    query = ("SELECT c.uu_id::text, c.content, c.cat_uu_id::text, c.user_uu_id::text, c.created_at, u.username "
+             "FROM tbl_comment c "
+             "JOIN tbl_user u ON c.user_uu_id = u.uu_id "
+             "WHERE c.cat_uu_id = :cat_uu_id "
+             "ORDER BY c.created_at DESC")
     q_data = {"cat_uu_id": cat_uu_id}
     try:
         res = await pgdb.fetch_all(query=query, values=q_data)
@@ -61,12 +63,17 @@ async def get_comments_by_cat(cat_uu_id: UUID, pgdb: Database = Depends(get_db))
              response_model=CommentOut,
              status_code=status.HTTP_201_CREATED,
              description="A logged user add a new comment to a cat post")
-async def create_comment(comment: CommentIn, user_uu_id: UUID = Depends(get_current_user), pgdb: Database = Depends(get_db)):
-    query = ("INSERT INTO tbl_comment(content, cat_uu_id, user_uu_id) "
-             "VALUES (:content, :cat_uu_id, :user_uu_id) "
-             "RETURNING uu_id::text, content, cat_uu_id::text, user_uu_id::text, created_at ")
+async def create_comment(comment: CommentIn, current_user = Depends(get_current_user), pgdb: Database = Depends(get_db)):
+    query = ("WITH inserted_comment AS ("
+             "  INSERT INTO tbl_comment(content, cat_uu_id, user_uu_id) "
+             "  VALUES (:content, :cat_uu_id, :user_uu_id) "
+             "  RETURNING uu_id, content, cat_uu_id, user_uu_id, created_at "
+             ") "
+             "SELECT c.uu_id::text, c.content, c.cat_uu_id::text, c.user_uu_id::text, c.created_at, u.username "
+             "FROM inserted_comment c "
+             "JOIN tbl_user u ON c.user_uu_id = u.uu_id")
     q_data = comment.model_dump()
-    q_data['user_uu_id'] = str(user_uu_id)
+    q_data['user_uu_id'] = str(current_user["uu_id"])
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         return res

@@ -1,6 +1,11 @@
 services:
   pgdb:
     image: postgres:17
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped 
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -16,14 +21,15 @@ services:
 
 # DA USARE PER LA CONSEGNA 
 # (devo selezionare la versione di angular e node usata nel corso)
-  # frontend:
-  #   build: ./frontend
-  #   container_name: frontend
-  #   restart: always
-  #   ports:
-  #     - "4200:80"
-  #   depends_on:
-  #     - backend
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
 
   backend:
     build:
@@ -33,13 +39,14 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - pgdb
+      pgdb:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
       - BASE_DIR=/app
     #  - FILES_DIR=/app/files
-    #volumes:
-    #  - ./files:/app/files
+    volumes:
+     - ./uploads:/app/backend/uploads/cats
 
 volumes:
   pgdata:

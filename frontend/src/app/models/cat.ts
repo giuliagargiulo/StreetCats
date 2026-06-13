@@ -1,5 +1,5 @@
 export interface Cat {
-  uuid: string;
+  uu_id: string;
   title: string;
   description: string;
   latitude: number;

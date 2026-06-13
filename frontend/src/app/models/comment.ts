@@ -1,6 +1,6 @@
 export interface Comment {
-  uuid: string;
-  author: string;
-  text: string;
+  uu_id: string;
+  username: string;
+  content: string;
   created_at: string;
 }

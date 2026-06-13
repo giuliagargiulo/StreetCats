@@ -1,39 +1,3 @@
-<!-- <app-navbar></app-navbar>
-<section class="cat-details">
-
-  <div class="intro">
-    <div class="header">
-      <h1 class="title">Molly - A friendly neighborhood cat</h1>
-      <p class="date">Sighted on: June 15, 2024</p>
-    </div>
-
-    <div class="image">
-        <img src="assets/molly2.jpg" alt="Molly the cat" class="cat-image">
-    </div>
-
-    <div class="description">
-      <h2>Description</h2>
-      <p>Molly is a medium-sized cat with a fluffy white coat and striking blue eyes. It has a distinctive black patch on its left ear. Molly is known for being very friendly and often approaches people for pets and cuddles. It was last seen near the central park, lounging on a bench.</p>
-    </div>
-
-    <div id="map-container">
-      <app-map size="medium"></app-map>
-    </div>
-  </div>
-
-  <div class ="comments-section">
-    <h2>Comments</h2>
-    <div class="comment" *ngFor="let comment of comments">
-      <p> <strong>{{ comment.author }}:</strong> {{ comment.text }} </p>
-      <span>{{ comment.created_at | timeago }}</span>
-    </div>
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="add-comment">
-      <textarea placeholder="Add a comment..."></textarea>
-      <button type="submit">Add Comment</button>
-    </form>
-  </div>
-</section>
-<app-footer></app-footer> -->
 
 <app-navbar></app-navbar>
 
@@ -63,8 +27,8 @@
     <h2>Comments ({{ comments.length }})</h2>
 
     <div class="comment" *ngFor="let comment of comments">
-      <p><strong>{{ comment.author }}:</strong> {{ comment.text }}</p>
-      <span>{{ comment.created_at | timeago }}</span>
+      <p><strong>{{ comment.username }}:</strong> {{ comment.content }}</p>
+      <span id="timeago">{{ comment.created_at | timeago }}</span>
     </div>
 
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="add-comment">

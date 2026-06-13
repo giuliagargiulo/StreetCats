@@ -11,9 +11,9 @@ ALTER TABLE tbl_user ADD CONSTRAINT tbl_user_unique_email UNIQUE (email);
 ALTER TABLE tbl_user ADD CONSTRAINT tbl_user_unique_username UNIQUE (username);
 
 
--- INSERT INTO tbl_user(username, emai, password) VALUES
+INSERT INTO tbl_user(uu_id, username, email, password) VALUES
 -- (giulia28, giuliagargiulo@mail.com, password1),
--- (maria70, mariagargiulo@mail.com, password2),
--- (antonio98, antoniogargiulo@mail.com, password3),
+('123e4567-e89b-12d3-a456-426614174000', 'maria70', 'mariagargiulo@mail.com', 'password2'),
+('123e4567-e89b-12d3-a456-426614174022', 'antonio98', 'antoniogargiulo@mail.com', 'password3');
 -- (ale222, alegargiulo@mail.com, password4);
  

@@ -15,8 +15,8 @@ export class CatService {
     return this.http.get<Cat[]>(`${this.apiUrl}/all`);
   }
 
-  getCatById(id: string): Observable<Cat> {
-    return this.http.get<Cat>(`${this.apiUrl}/${id}`);
+  getCatById(uu_id: string): Observable<Cat> {
+    return this.http.get<Cat>(`${this.apiUrl}/by-id/${uu_id}`);
   }
 
   createCat(cat: FormData): Observable<Cat> {

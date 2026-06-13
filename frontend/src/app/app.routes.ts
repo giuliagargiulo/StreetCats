@@ -23,7 +23,7 @@ export const routes: Routes = [
     title: "Add Cat Page",
     component: AddCatPageComponent
   }, {
-    path: "cat-details",
+    path: "cat-details/:uu_id",
     title: "Cat Details Page",
     component: CatDetailsPageComponent
   }

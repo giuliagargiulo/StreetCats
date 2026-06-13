@@ -6,6 +6,7 @@ import { RouterLink, Router} from "@angular/router";
 import { QuillModule } from 'ngx-quill';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CatService } from '../../services/cat.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class AddCatPageComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private catService: CatService,
     private router: Router
   ) {
     this.addCatForm = this.fb.group({
@@ -57,36 +58,6 @@ export class AddCatPageComponent {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  // onFileSelected(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-
-  //   if (!input.files || input.files.length === 0) {
-  //     return;
-  //   }
-
-  //   this.selectedFile = input.files[0];
-  //   this.addCatForm.patchValue({
-  //     image: this.selectedFile
-  //   });
-  // }
-
-  // onSubmit() {
-  //   if (this.addCatForm.invalid) return;
-  //   const payload = this.addCatForm.value;
-  //   this.http.post<any>('http://localhost:3000/auth/add-cat', payload)
-  //     .subscribe({
-  //       next: (cat) => {
-  //         console.log('Cat Added:', cat);
-  //         alert('New cat successfully added!');
-  //         this.router.navigate(['/']);
-  //       },
-  //       error: (err) => {
-  //         console.error('Add cat error:', err);
-  //         alert('An error occurred during adding a new cat.');
-  //       }
-  //     });
-  // }
-
   onSubmit() {
     if (this.addCatForm.invalid) {
       alert("Please, fill all the requested fields.");
@@ -104,7 +75,7 @@ export class AddCatPageComponent {
     }
 
     // Passiamo formData invece di payload (che era in formato JSON)
-    this.http.post<any>('http://localhost:3000/auth/add-cat', formData)
+    this.catService.createCat(formData)
       .subscribe({
         next: (cat) => {
           console.log('Cat Added:', cat);

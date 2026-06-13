@@ -21,7 +21,7 @@ L.Icon.Default.mergeOptions({
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit, OnChanges {
+export class MapComponent implements AfterViewInit, OnChanges, AfterViewInit {
 
   @Input() cats: Cat[] = [];
   @Input() size: 'small' | 'medium' | 'large' = 'large';
@@ -44,6 +44,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.initMap();
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }, 300);
     this.markersLayer.addTo(this.map);
 
     setTimeout(() => {
@@ -73,6 +76,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(this.map);
 
+    const container = this.mapContainer.nativeElement as HTMLElement;
+    container.blur?.();
+    container.removeAttribute('tabindex');
+
     if(this.isClickable){
       this.map.on('click', (e: L.LeafletMouseEvent) => {
         const { lat, lng } = e.latlng;
@@ -84,6 +91,19 @@ export class MapComponent implements AfterViewInit, OnChanges {
       });
       this.mapContainer.nativeElement.style.cursor = 'crosshair';
     }
+
+    const mapElement: HTMLElement = this.mapContainer.nativeElement;
+
+    mapElement.addEventListener('click', (event: Event) => {
+      const target = event.target as HTMLElement;
+
+      if (target && target.classList.contains('popup-trigger-btn')) {
+        const uu_id = target.getAttribute('data-uu_id');
+        if (uu_id) {
+          this.router.navigate(['/cat-details', uu_id]);
+        }
+      }
+    });
   }
 
   private renderMarkers(): void {
@@ -95,7 +115,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
       const lat = Number(cat.latitude);
       const lng = Number(cat.longitude);
 
-      if (!lat || !lng) return;
+      if (isNaN(lat) || isNaN(lng)) return;
 
       const customIcon = L.icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
@@ -113,10 +133,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
       marker.on('popupopen', () => {
         setTimeout(() => {
-          const btn = document.getElementById(`btn-${cat.uuid}`);
+          const btn = document.getElementById(`btn-${cat.uu_id}`);
           if (btn) {
             btn.addEventListener('click', () => {
-              this.router.navigate(['/cat', cat.uuid]);
+              this.router.navigate(['/cat', cat.uu_id]);
             });
           }
         });
@@ -126,16 +146,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   private createPopup(cat: Cat): string {
-    return `
-      <div class="popup-card">
-        <img src="${cat.picture_url}" class="popup-img"/>
-        <h3 class="popup-title">${cat.title}</h3>
-        <p class="popup-desc">${cat.description?.slice(0, 70)}...</p>
-        <button onclick="window.location.href='/cats/${cat.uuid}'" id="btn-${cat.uuid}" class="popup-btn">
-          View details
-        </button>
-      </div>
-    `;
-  }
+  return `
+    <div class="popup-card">
+      <img src="${cat.picture_url}" class="popup-img"/>
+      <h3 class="popup-title">${cat.title}</h3>
+      <p class="popup-desc">${cat.description?.slice(0, 70)}...</p>
+      <button data-uu_id="${cat.uu_id}" class="popup-btn popup-trigger-btn">
+        View details
+      </button>
+    </div>
+  `;
+}
 }
 

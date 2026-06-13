@@ -11,18 +11,33 @@
   </div>
 
   <div class="right nav-buttons" [class.active]="isMenuOpen">
+    <ng-container *ngIf="username$ | async as user; else desktopGuest">
+      <span class="welcome-msg">Welcome, <strong>{{ username$ | async }}</strong></span>
+      <button class="btn-logout" (click)="onLogout()">Logout</button>
+    </ng-container>
+
+    <ng-template #desktopGuest>
       <button routerLink="/login" (click)="closeMenu()">Login</button>
       <button routerLink="/register" (click)="closeMenu()">Sign Up</button>
+    </ng-template>
   </div>
 
-  <!-- MENU MOBILE -->
   <button class="hamburger" (click)="toggleMenu()">☰</button>
 
   <div class="mobile-menu" [class.active]="isMenuOpen">
     <a routerLink="/" fragment="map" (click)="closeMenu()">Map</a>
     <a routerLink="/add-cat" (click)="closeMenu()">Add Sighting</a>
-    <a routerLink="/login" (click)="closeMenu()">Login</a>
-    <a routerLink="/register" (click)="closeMenu()">Sign Up</a>
+
+    <ng-container *ngIf="username$ | async as user; else mobileGuest">
+      <div class="mobile-user-section">
+        <span class="welcome-msg">Welcome, <strong>{{ username$ | async }}</strong></span>
+        <a class="mobile-logout" (click)="onLogout()">Logout</a>
+      </div>
+    </ng-container>
+
+    <ng-template #mobileGuest>
+      <a routerLink="/login" (click)="closeMenu()">Login</a>
+      <a routerLink="/register" (click)="closeMenu()">Sign Up</a>
+    </ng-template>
   </div>
 </nav>
-

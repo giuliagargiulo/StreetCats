@@ -9,6 +9,7 @@ import { Comment } from '../../models/comment';
 import { CatService } from '../../services/cat.service';
 import { CommentService } from '../../services/comment.service';
 import { TimeagoModule } from 'ngx-timeago';
+import { TimeagoFormatter, TimeagoDefaultFormatter, TimeagoClock, TimeagoDefaultClock } from 'ngx-timeago';
 import { CommonModule, NgFor, NgIf, DatePipe } from '@angular/common';
 
 @Component({
@@ -16,14 +17,18 @@ import { CommonModule, NgFor, NgIf, DatePipe } from '@angular/common';
   standalone: true,
   imports: [NavbarComponent, FooterComponent, MapComponent, TimeagoModule, CommonModule, NgFor, NgIf, DatePipe, ReactiveFormsModule],
   templateUrl: './cat-details-page.component.html',
-  styleUrl: './cat-details-page.component.scss'
+  styleUrl: './cat-details-page.component.scss',
+  providers: [
+    { provide: TimeagoFormatter, useClass: TimeagoDefaultFormatter },
+    { provide: TimeagoClock, useClass: TimeagoDefaultClock }
+  ]
 })
 export class CatDetailsPageComponent implements OnInit {
 
   cat: Cat | null = null;
   comments: Comment[] = [];
   commentForm!: FormGroup;
-  cat_uuid!: string;
+  cat_uu_id!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,32 +37,30 @@ export class CatDetailsPageComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.cat_uuid = this.route.snapshot.paramMap.get('uuid') || '';
 
-    if (this.cat_uuid) {
+  ngOnInit() {
+    this.cat_uu_id = this.route.snapshot.paramMap.get('uu_id') || '';
+    if (this.cat_uu_id) {
       this.loadCatDetails();
       this.loadComments();
     }
 
-    // 2. Inizializza il form reattivo per i commenti
     this.commentForm = this.fb.group({
       text: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
 
   loadCatDetails() {
-    this.catService.getCatById(this.cat_uuid).subscribe({
+    this.catService.getCatById(this.cat_uu_id).subscribe({
       next: (data) => this.cat = data,
-      error: (err) => console.error('Errore nel caricamento del gatto:', err)
+      error: (err) => console.error('Error during loading cat:', err)
     });
   }
 
   loadComments() {
-    // Passiamo l'uuid al servizio per prendere SOLO i commenti di questo gatto
-    this.commentService.getCommentsByCat(this.cat_uuid).subscribe({
+    this.commentService.getCommentsByCat(this.cat_uu_id).subscribe({
       next: (data) => this.comments = data,
-      error: (err) => console.error('Errore nel caricamento dei commenti:', err)
+      error: (err) => console.error('Error during loading commnts:', err)
     });
   }
 
@@ -65,21 +68,22 @@ export class CatDetailsPageComponent implements OnInit {
     if (this.commentForm.invalid) return;
 
     const payload = {
-      cat_uuid: this.cat_uuid,
-      text: this.commentForm.value.text,
-      // L'autore andrebbe preso dal tuo AuthService globale (utente loggato)
-      author: 'Anonymous User'
+      cat_uu_id: this.cat_uu_id,
+      content: this.commentForm.value.text
     };
 
     this.commentService.addComment(payload).subscribe({
       next: (newComment) => {
-        // Aggiunge il commento alla lista in tempo reale senza ricaricare la pagina
         this.comments.push(newComment);
         this.commentForm.reset();
       },
       error: (err) => {
-        console.error('Errore invio commento:', err);
-        alert('Impossibile inviare il commento al momento.');
+        console.error('Error during sending comment:', err);
+        if (err.status === 401) {
+          alert('Devi effettuare il login per poter commentare.');
+        } else {
+          alert('Impossible to upload the comment.');
+        }
       }
     });
   }

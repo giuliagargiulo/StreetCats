@@ -5,6 +5,7 @@ from api.router.auth.auth import router as auth_router
 from api.router.comment.comment import router as comment_router
 from fastapi.middleware.cors import CORSMiddleware
 from api.database import database 
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title = "StreetCats API",
@@ -22,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.on_event("startup")
 async def startup():

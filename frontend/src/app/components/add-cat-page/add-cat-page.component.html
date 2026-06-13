@@ -6,32 +6,43 @@
       <p>Have you seen a cat recently? Help the community keep track of our feline friends.</p>
     </div>
 
-  <form [formGroup]="addCatForm" (ngSubmit)="onSubmit()">
-    <div class="photo">
-      <h3>1. Upload image</h3>
-      <label for="image" class="upload-box">
-        @if (imagePreview) {
-          <img [src]="imagePreview" alt="Selected image preview" class="preview-image">
-        } @else {
-        <span>📷 Click here to upload an image</span>
-        }
-       </label>
-      <input id="image" type="file" accept="image/*"
-          (change)="onFileSelected($event)" hidden>
-    </div>
-    <div class="location">
-      <h3>2. Click on the map to select location</h3>
-      <app-map size="small" (locationSelected)="onLocationSelected($event)" [isClickable]="true"></app-map>
-    </div>
-    <div class="form-group">
-      <h3>3. Details</h3>
+    <form class="add-cat-form" [formGroup]="addCatForm" (ngSubmit)="onSubmit()">
+      <div class="photo">
+        <h3>1. Upload image</h3>
+        <label for="image" class="upload-box">
+          @if (imagePreview) {
+            <img [src]="imagePreview" alt="Selected image preview" class="preview-image">
+          } @else {
+            <span>📷 Click here to upload an image</span>
+          }
+        </label>
+        <input id="image" type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+      </div>
+
+      <div class="location">
+        <h3>2. Click on the map to select location</h3>
+        <app-map
+          size="small"
+          (locationSelected)="onLocationSelected($event)"
+          [isClickable]="true">
+        </app-map>
+      </div>
+
+      <div class="form-group">
+        <h3>3. Details</h3>
         <label for="title">Title</label>
-        <input type="text" formControlName="title">
+        <input id="title" type="text" formControlName="title">
+
         <label for="description">Description</label>
-        <quill-editor theme="snow" [modules]="modules" placeholder="Describe the cat..." type="text" formControlName="description"></quill-editor>
-    </div>
-    <button type="submit">Confirm</button>
-  </form>
-</div>
+        <quill-editor
+          theme="snow"
+          [modules]="modules"
+          placeholder="Describe the cat..."
+          formControlName="description">
+        </quill-editor>
+      </div>
+      <button type="submit">Confirm</button>
+    </form>
+  </div>
 </section>
 <app-footer></app-footer>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { User, AuthResponse } from '../models/user';
-import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -16,7 +16,10 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ){}
 
   // POST /auth/register
   register(userData: any): Observable<User> {
@@ -38,10 +41,10 @@ export class AuthService {
     return this.http.get<User>(`${this.apiUrl}/me`);
   }
 
-  // Metodo per fare il logout (non chiama il backend, cancella solo i dati locali)
   logout(): void {
     localStorage.removeItem('access_token');
     this.loggedIn.next(false);
+    this.router.navigate(['/login']);
   }
 
   // Metodi di utilità per il token
