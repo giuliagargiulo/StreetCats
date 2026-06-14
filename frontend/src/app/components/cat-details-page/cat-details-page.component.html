@@ -1,6 +1,4 @@
-
 <app-navbar></app-navbar>
-
 <section class="cat-details" *ngIf="cat; else loadingTemplate">
 
   <div class="intro">
@@ -31,19 +29,25 @@
       <span id="timeago">{{ comment.created_at | timeago }}</span>
     </div>
 
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="add-comment">
-      <textarea formControlName="text" placeholder="Add a comment..."></textarea>
-      <button type="submit" [disabled]="commentForm.invalid">Add Comment</button>
-    </form>
-  </div>
+    <div *ngIf="currentUser$ | async; else loginMessage">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="add-comment">
+        <textarea formControlName="text" placeholder="Add a comment..."></textarea>
+        <button type="submit" [disabled]="commentForm.invalid">Add Comment</button>
+      </form>
+    </div>
 
+    <ng-template #loginMessage>
+      <div class="login-comment-notice">
+        <p>You must be logged in to leave a comment. <a routerLink="/login">Login here</a></p>
+      </div>
+    </ng-template>
+  </div>
 </section>
 
 <ng-template #loadingTemplate>
   <section class="cat-details">
 
     <div class="intro">
-
       <div class="header">
         <div class="skeleton skeleton-title"></div>
         <div class="skeleton skeleton-date"></div>
@@ -54,7 +58,8 @@
       </div>
 
       <div class="description">
-        <div class="skeleton skeleton-title-small"></div> <div class="skeleton skeleton-text-line"></div>
+        <div class="skeleton skeleton-title-small"></div>
+        <div class="skeleton skeleton-text-line"></div>
         <div class="skeleton skeleton-text-line"></div>
         <div class="skeleton skeleton-text-line short"></div>
       </div>
@@ -62,12 +67,11 @@
       <div id="map-container">
         <div class="skeleton skeleton-map"></div>
       </div>
-
     </div>
 
     <div class="comments-section">
-
-      <div class="skeleton skeleton-comments-title"></div> <div class="comment">
+      <div class="skeleton skeleton-comments-title"></div>
+      <div class="comment">
         <div class="skeleton skeleton-comment-author"></div>
         <div class="skeleton skeleton-comment-text"></div>
       </div>
@@ -81,7 +85,6 @@
         <div class="skeleton skeleton-textarea"></div>
         <div class="skeleton skeleton-button"></div>
       </div>
-
     </div>
 
   </section>

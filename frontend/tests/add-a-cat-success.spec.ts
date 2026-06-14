@@ -23,30 +23,7 @@ test('verify user is logged in and can add a new cat', async ({ page }) => {
   await expect(page).toHaveURL('/');
   await expect(page.getByRole('navigation')).toContainText(new RegExp(`Welcome, ${username}`, 'i'));
 
- // ADD A CAT
-  // await page.getByRole('link', { name: 'Add Sighting' }).click();
-  // await page.getByText('📷 Click here to upload an').click();
-  // const imagePath = path.resolve(__dirname, '../src/assets/molly.jpg');
-  // await page.locator('input[type="file"]').setInputFiles(imagePath);
-
-  // await page.locator('div').filter({ hasText: '+− Leaflet | © OpenStreetMap' }).nth(2).click();
-  // await page.waitForTimeout(500);
-  // await page.getByRole('textbox', { name: 'Title' }).click();
-  // await page.getByRole('textbox', { name: 'Title' }).fill('Cute gray cat');
-  // await page.locator('.ql-editor').click();
-  // await page.locator('.ql-editor').fill('I saw this cute gray cat near the square.');
-  // await page.locator('.ql-editor').blur();
-
-  // dialogMessage = '';
-  // page.once('dialog', async dialog => {
-  //   dialogMessage = dialog.message();
-  //   await dialog.dismiss();
-  // });
-  // await page.getByRole('button', { name: 'Confirm' }).click();
-  // await expect.poll(() => dialogMessage).not.toBe('');
-  // expect(dialogMessage).toMatch(/New cat successfully added!/i);
-  // await expect(page).toHaveURL('/');
-
+  // ADD A CAT
   await page.getByRole('button', { name: 'Add a new cat' }).click();
   await page.getByText('📷 Click here to upload an').click();
   const imagePath = path.resolve(__dirname, '../src/assets/molly.jpg');
@@ -67,6 +44,6 @@ test('verify user is logged in and can add a new cat', async ({ page }) => {
   });
   await page.getByRole('button', { name: 'Confirm' }).click();
   await expect.poll(() => dialogMessage).not.toBe('');
-  expect(dialogMessage).toMatch(/Cat successfully added/i);
+  expect(dialogMessage).toMatch(/New cat successfully added!/i);
   await expect(page).toHaveURL('/');
 });

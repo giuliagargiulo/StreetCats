@@ -43,7 +43,8 @@ export class LoginpageComponent {
         },
         error: (err) => {
           console.error('Login error:', err);
-          alert('Login failed');
+          const backendMessage = err.error?.detail || 'Unknown error from server';
+          alert(`Login failed: ${backendMessage}`);
         }
       });
   }

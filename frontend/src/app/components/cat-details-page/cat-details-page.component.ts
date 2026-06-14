@@ -6,11 +6,14 @@ import { FooterComponent } from "../footer/footer.component";
 import { MapComponent } from "../map/map.component";
 import { Cat } from '../../models/cat';
 import { Comment } from '../../models/comment';
-import { CatService } from '../../services/cat.service';
 import { CommentService } from '../../services/comment.service';
 import { TimeagoModule } from 'ngx-timeago';
 import { TimeagoFormatter, TimeagoDefaultFormatter, TimeagoClock, TimeagoDefaultClock } from 'ngx-timeago';
 import { CommonModule, NgFor, NgIf, DatePipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { CatService } from '../../services/cat.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cat-details-page',
@@ -29,14 +32,19 @@ export class CatDetailsPageComponent implements OnInit {
   comments: Comment[] = [];
   commentForm!: FormGroup;
   cat_uu_id!: string;
+  currentUser$!: Observable<any>;
+
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private catService: CatService,
+    private authService: AuthService,
     private commentService: CommentService,
     private fb: FormBuilder
-  ) {}
-
+  ) {
+    this.currentUser$ = this.authService.getCurrentUser();
+  }
 
   ngOnInit() {
     this.cat_uu_id = this.route.snapshot.paramMap.get('uu_id') || '';
@@ -49,6 +57,8 @@ export class CatDetailsPageComponent implements OnInit {
       text: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
+
+
 
   loadCatDetails() {
     this.catService.getCatById(this.cat_uu_id).subscribe({
@@ -67,6 +77,23 @@ export class CatDetailsPageComponent implements OnInit {
   onSubmit() {
     if (this.commentForm.invalid) return;
 
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        if (user) {
+          this.sendComment();
+        } else {
+          this.handleUnauthorized();
+        }
+      },
+      error: (err) => {
+        // Se il server risponde con 401/403 o scatta un errore, l'utente non è loggato
+        this.handleUnauthorized();
+      }
+    });
+  }
+
+  // Abbiamo isolato la logica di invio per rendere il codice più pulito
+  private sendComment() {
     const payload = {
       cat_uu_id: this.cat_uu_id,
       content: this.commentForm.value.text
@@ -79,12 +106,13 @@ export class CatDetailsPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error during sending comment:', err);
-        if (err.status === 401) {
-          alert('Devi effettuare il login per poter commentare.');
-        } else {
-          alert('Impossible to upload the comment.');
-        }
+        alert('An error occurred during adding a new comment, please retry later.');
       }
     });
+  }
+
+  private handleUnauthorized() {
+    alert('You have to login to leave a comment.');
+    this.router.navigate(['/login']);
   }
 }

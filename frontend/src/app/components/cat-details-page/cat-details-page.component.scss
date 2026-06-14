@@ -206,10 +206,19 @@ button:hover {
   }
 }
 
-/* =========================================
-   SKELETON LOADER
-   ========================================= */
 
+.login-comment-notice a {
+  color: #F97316;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-comment-notice a:hover {
+  color: #FB923C;
+}
+
+
+// Scheletro
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }

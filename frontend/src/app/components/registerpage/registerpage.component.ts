@@ -46,7 +46,8 @@ export class RegisterpageComponent {
         },
         error: (err) => {
           console.error('Register error:', err);
-          this.errorMessage = 'An error occurred during registration.';
+          const backendMessage = err.error?.detail || 'Unknown error from server';
+          this.errorMessage = `An error occurred during registration: ${backendMessage}`;
           alert(this.errorMessage);
         }
       });

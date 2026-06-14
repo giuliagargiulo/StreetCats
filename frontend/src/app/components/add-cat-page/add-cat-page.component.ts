@@ -84,7 +84,7 @@ export class AddCatPageComponent {
         },
         error: (err) => {
           console.error('Add cat error:', err);
-          alert('An error occurred during adding a new cat.');
+          alert('An error occurred during adding a new cat, please retry later.');
         }
       });
   }
