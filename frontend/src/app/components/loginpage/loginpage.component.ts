@@ -38,7 +38,7 @@ export class LoginpageComponent {
     this.authService.login(payload).subscribe({
         next: (res) => {
           localStorage.setItem('token', res.access_token);
-          alert('Login success!');
+          alert('Login completed successfully!');
           this.router.navigate(['']);
         },
         error: (err) => {
