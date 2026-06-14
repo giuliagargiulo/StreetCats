@@ -29,20 +29,18 @@ Prima di iniziare, assicurati di avere installato sul tuo computer:
 1. Prima di iniziare, assicurati di avere installato sul tuo computer:
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-2. Posizionati nella directory del progetto
-Apri il terminale e naviga fino alla cartella principale del progetto:
+2. Posizionati nella directory del progetto, apri il terminale e naviga fino alla cartella principale del progetto:
 ```Bash
 cd percorso/della/cartella/StreetCats
 ```
-3. Avvia i container
-Esegui il comando di build e avvio.
+3. Avvia i container eseguendo il comando di build e avvio.
 ```Bash
 docker compose up --build
 ```
 ---
 
 ## 🌐 Endpoint e Servizi Disponibili
-Una volta che tutti i container sono visualizzati come running (o verdi su Docker Desktop), l'applicazione sarà accessibile ai seguenti indirizzi:
+Una volta che tutti i container sono attivi l'applicazione sarà accessibile ai seguenti indirizzi:
 
 | Servizio | URL | Descrizione |
 | :--- | :--- | :--- |
@@ -51,8 +49,8 @@ Una volta che tutti i container sono visualizzati come running (o verdi su Docke
 | Documentazione API | http://localhost:8000/docs | Interfaccia Swagger UI interattiva per testare le API. |
 
 ---
-##🧪 Testing
-I test end-to-end della piattaforma sono stati sviluppati utilizzando Playwright. Per eseguirli localmente, assicurati che l'applicazione sia avviata in Docker e, all'interno della cartella frontend, lancia:
+## 🧪 Testing
+I test end-to-end della piattaforma sono stati sviluppati utilizzando **Playwright** . Per eseguirli localmente, assicurati che l'applicazione sia avviata in Docker e, all'interno della cartella **frontend**, lancia:
 ```Bash
 npm run test
 ```
