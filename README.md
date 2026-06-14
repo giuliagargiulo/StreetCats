@@ -12,7 +12,7 @@ L'intera applicazione è containerizzata tramite **Docker** e orchestrata con **
 
 ## 🛠️ Prerequisiti
 Prima di iniziare, assicurati di avere installato sul tuo computer:
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/) (che include sia Docker Engine che Docker Compose).
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 ---
 
 ## 📂 Struttura del Progetto
@@ -22,6 +22,7 @@ streetcats/
 ├── backend/          # Codice sorgente del server FastAPI e Dockerfile dedicato
 ├── frontend/         # Codice sorgente dell'applicazione Angular e Dockerfile (Multi-stage con Nginx)
 └── docker-compose.yml # File di orchestrazione per backend, frontend e database
+```
 ---
 
 ## 🚀 Come Eseguire l'Applicazione
