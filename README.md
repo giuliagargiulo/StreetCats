@@ -42,24 +42,29 @@ docker compose up --build -d
 
 ## 🌐 Endpoint e Servizi Disponibili
 Una volta che tutti i container sono visualizzati come running (o verdi su Docker Desktop), l'applicazione sarà accessibile ai seguenti indirizzi:
-Servizio	URL	Descrizione
-Frontend (Angular)	http://localhost:4200	L'interfaccia utente completa di StreetCats.
-Backend (FastAPI)	http://localhost:8000	L'indirizzo base del server API.
-Documentazione API	http://localhost:8000/docs	Interfaccia Swagger UI interattiva per testare le API.
+
+| Servizio | URL | Descrizione |
+| :--- | :--- | :--- |
+| Frontend (Angular) | http://localhost:4200 | L'interfaccia utente completa di StreetCats. |
+| Backend (FastAPI) | http://localhost:8000 | L'indirizzo base del server API. |
+| Documentazione API | http://localhost:8000/docs | Interfaccia Swagger UI interattiva per testare le API. |
+
 ---
 
 ## 🛑 Come Fermare l'Applicazione
 Per spegnere i container e liberare le porte del computer:
 Se hai avviato i container in primo piano, premi CTRL + C nel terminale.
 Se hai avviato i container in background (con il flag -d), esegui:
-Bash
+```Bash
 docker compose down
 Se desideri spegnere i container eliminando anche i volumi del database (resettando così i dati salvati per ripartire da una situazione pulita), esegui:
 Bash
 docker compose down -v
+```
 ---
 ##🧪 Testing
 I test end-to-end della piattaforma sono stati sviluppati utilizzando Playwright. Per eseguirli localmente, assicurati che l'applicazione sia avviata in Docker e, all'interno della cartella frontend, lancia:
-Bash
+```Bash
 npm run test
+```
 ---
