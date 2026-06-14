@@ -10,7 +10,7 @@ L'intera applicazione è containerizzata tramite **Docker** e orchestrata con **
 
 ---
 ## 📂 Struttura del Progetto
-Il repository è strutturato nel seguente modo:
+
 ```text
 streetcats/
 ├── backend/          # Codice sorgente del server FastAPI e Dockerfile dedicato
@@ -25,12 +25,16 @@ Prima di iniziare, assicurati di avere installato sul tuo computer:
 ---
 
 ## 🚀 Come Eseguire l'Applicazione
-1. Posizionati nella directory del progetto
+
+1. Prima di iniziare, assicurati di avere installato sul tuo computer:
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+2. Posizionati nella directory del progetto
 Apri il terminale e naviga fino alla cartella principale del progetto:
 ```Bash
-cd percorso/della/cartella/streetcats
+cd percorso/della/cartella/StreetCats
 ```
-2. Avvia i container
+3. Avvia i container
 Esegui il comando di build e avvio.
 ```Bash
 docker compose up --build
