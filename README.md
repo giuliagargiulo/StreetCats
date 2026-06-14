@@ -19,15 +19,9 @@ streetcats/
 ```
 ---
 
-## 🛠️ Prerequisiti
-Prima di iniziare, assicurati di avere installato sul tuo computer:
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/).
----
-
 ## 🚀 Come Eseguire l'Applicazione
 
-1. Prima di iniziare, assicurati di avere installato sul tuo computer:
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+1. Prima di iniziare, assicurati di avere installato sul tuo computer [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 2. Posizionati nella directory del progetto, apri il terminale e naviga fino alla cartella principale del progetto:
 ```Bash
