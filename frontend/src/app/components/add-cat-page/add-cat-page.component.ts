@@ -2,16 +2,15 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { MapComponent } from '../map/map.component';
-import { RouterLink, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import { QuillModule } from 'ngx-quill';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { CatService } from '../../services/cat.service';
 
 
 @Component({
   selector: 'app-add-cat-page',
-  imports: [NavbarComponent, FooterComponent, MapComponent, RouterLink, QuillModule, ReactiveFormsModule],
+  imports: [NavbarComponent, FooterComponent, MapComponent, QuillModule, ReactiveFormsModule],
   templateUrl: './add-cat-page.component.html',
   styleUrl: './add-cat-page.component.scss'
 })
@@ -60,7 +59,7 @@ export class AddCatPageComponent {
 
   onSubmit() {
     if (this.addCatForm.invalid) {
-      alert("Please, fill all the requested fields.");
+      alert("Please, fill all the fields.");
       return;
     }
     const formData = new FormData();

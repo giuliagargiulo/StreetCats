@@ -31,6 +31,7 @@ export class LoginpageComponent {
   onSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      alert('Please, fill all the fields!')
       return;
     }
     const payload = this.loginForm.value;

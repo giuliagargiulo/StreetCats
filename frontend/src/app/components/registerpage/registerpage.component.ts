@@ -33,6 +33,7 @@ export class RegisterpageComponent {
 
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      alert('Please, fill all the fields!')
       return;
     }
 
