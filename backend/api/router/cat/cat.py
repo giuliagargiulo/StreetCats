@@ -8,7 +8,7 @@ from api.router.auth.auth_util import get_current_user
 from pathlib import Path as FileSystemPath
 import uuid
 
-UPLOAD_DIR = FileSystemPath("backend/uploads/cats")
+UPLOAD_DIR = FileSystemPath("uploads/cats")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 class CatIn(BaseModel):
@@ -48,30 +48,6 @@ router = APIRouter(
 # GET{/id}: cerca per id
 
 
-# @router.get("/by-id/{uu_id}",
-#             response_model=CatOut,
-#             responses={**responses},
-#             status_code=status.HTTP_200_OK,
-#             description="Get cat by id")
-# async def get_cat_by_id(uu_id: UUID, pgdb : Database = Depends(get_db)):
-#     query = ("SELECT uu_id::text, title, description, longitude, latitude, picture_url, user_uu_id, created_at "
-#              "FROM tbl_cat "
-#              "WHERE uu_id = :uu_id ")
-#     q_data = {"uu_id": uu_id}
-#     try:
-#         res = await pgdb.fetch_one(query=query, values=q_data)
-#         if not res:
-#             raise HTTPException(
-#                 status_code=status.HTTP_404_NOT_FOUND, detail="Cat not found")
-#         return res
-#     except HTTPException:
-#         raise
-#     except Exception as ex:
-#         print(f"ERROR: {ex}")
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail="Internal server error")
-
 @router.get("/by-id/{uu_id}",
             response_model=CatOut,
             responses={**responses},
@@ -104,29 +80,6 @@ async def get_cat_by_id(uu_id: UUID, request: Request, pgdb: Database = Depends(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error")
 
-# @router.get("/all",
-#             response_model=list[CatOut],
-#             responses={**responses},
-#             status_code=status.HTTP_200_OK,
-#             description="Get all the cats")
-# async def get_all_cats(pgdb : Database = Depends(get_db)):
-#     query = ("SELECT uu_id::text, title, description, latitude, longitude, picture_url, user_uu_id, created_at "
-#              "FROM tbl_cat ")
-#     try:
-#         res = await pgdb.fetch_all(query=query)
-#         # if not res:
-#         #     raise HTTPException(
-#         #         status_code=status.HTTP_404_NOT_FOUND, detail="There are not cats")
-#         # return res
-        
-#         return res if res else []
-#     except HTTPException:
-#         raise
-#     except Exception as ex:
-#         print(f"ERROR: {ex}")
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail="Internal server error")
 
 @router.get("/all",
             response_model=list[CatOut],
@@ -189,11 +142,10 @@ async def create_cat(
     with open(file_path, "wb") as buffer:
         buffer.write(contents)
     
-    query = """
-        INSERT INTO tbl_cat (title, description, latitude, longitude, picture_url, user_uu_id)
-        VALUES (:title, :description, :latitude, :longitude, :image_url, :user_uu_id)
-        RETURNING uu_id::text, title, description, latitude, longitude, picture_url, user_uu_id, created_at
-    """
+    query = ("INSERT INTO tbl_cat (title, description, latitude, longitude, picture_url, user_uu_id) "
+             "VALUES (:title, :description, :latitude, :longitude, :image_url, :user_uu_id) "
+             "RETURNING uu_id::text, title, description, latitude, longitude, picture_url, "
+              "user_uu_id, created_at ")
     
     values = {
         "title": title,
@@ -203,22 +155,13 @@ async def create_cat(
         "image_url": image_url,
         "user_uu_id": user_uu_id
     }
-    new_cat = await pgdb.fetch_one(query=query, values=values)
-    return new_cat
+    try:
+        res = await pgdb.fetch_one(query=query, values=values)
+        return res
+    except Exception as ex:
+        print(f"ERROR: {ex}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error")
     
-    
-    
-    # query = ("INSERT INTO tbl_cat(title, description, location, image, user_uu_id) "
-    #          "VALUES (:title, :description, :location, :picture_url, :user_uu_id) "
-    #          "RETURNING uu_id::text, title, description, location, picture_url, "
-    #          "user_uu_id, created_at ")
-    # q_data = cat.model_dump()
-    # q_data['user_uu_id'] = str(user_uu_id)
-    # try:
-    #     res = await pgdb.fetch_one(query=query, values=q_data)
-    #     return res
-    # except Exception as ex:
-    #     print(f"ERROR: {ex}")
-    #     raise HTTPException(
-    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #         detail="Internal server error")
+

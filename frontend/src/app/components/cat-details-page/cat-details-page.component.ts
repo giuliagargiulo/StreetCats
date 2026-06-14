@@ -86,13 +86,11 @@ export class CatDetailsPageComponent implements OnInit {
         }
       },
       error: (err) => {
-        // Se il server risponde con 401/403 o scatta un errore, l'utente non è loggato
         this.handleUnauthorized();
       }
     });
   }
 
-  // Abbiamo isolato la logica di invio per rendere il codice più pulito
   private sendComment() {
     const payload = {
       cat_uu_id: this.cat_uu_id,

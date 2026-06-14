@@ -1,4 +1,4 @@
-import { Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AddCatPageComponent } from './components/add-cat-page/add-cat-page.component';
 import { CatDetailsPageComponent } from './components/cat-details-page/cat-details-page.component';

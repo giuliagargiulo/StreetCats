@@ -16,9 +16,13 @@ app.include_router(user_router, prefix="/user", tags=["user"])
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(comment_router, prefix="/comment", tags=["comment"])
 
+origins = [
+    "http://localhost:4200",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # per sviluppo
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

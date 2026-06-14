@@ -46,7 +46,7 @@ services:
       - BASE_DIR=/app
     #  - FILES_DIR=/app/files
     volumes:
-     - ./uploads/cats:/app/backend/uploads/cats
+     - ./backend/uploads/cats:/app/backend/uploads/cats
 
 volumes:
   pgdata:
