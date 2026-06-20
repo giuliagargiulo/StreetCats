@@ -17,9 +17,9 @@ class CatIn(BaseModel):
     description: str = Field(..., title="Description of the post",
                              example="I found this cat near my house.")
     latitude: float = Field(..., title="latitude where the cat was found", 
-                        examples=40.8518)
+                        example=40.8518)
     longitude: float = Field(..., title="longitude where the cat was found",
-                        examples=14.2681)
+                        example=14.2681)
     picture_url: str = Field(..., title="Relative URL of the cat picture",
                              example="uploads/cat/cat.jpg")
     user_uu_id: UUID = Field(..., title="UUID of the user who created the post",
@@ -57,7 +57,7 @@ async def get_cat_by_id(uu_id: UUID, request: Request, pgdb: Database = Depends(
     query = ("SELECT uu_id::text, title, description, longitude, latitude, picture_url, user_uu_id, created_at "
              "FROM tbl_cat "
              "WHERE uu_id = :uu_id ")
-    q_data = {"uu_id": str(uu_id)} # È sempre buona norma castare l'UUID a stringa per il DB
+    q_data = {"uu_id": str(uu_id)}
     try:
         res = await pgdb.fetch_one(query=query, values=q_data)
         if not res:
