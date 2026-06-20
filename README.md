@@ -56,6 +56,7 @@ StreetCats is a web platform for sharing and tracking stray cat sightings, devel
 The platform includes:
 - **Backend:** a REST API built with **Python**, **FastAPI**, and **PostgreSQL**.
 - **Frontend:** a Single Page Application built with **Angular v19** and served through **Nginx**.
+
 The entire application is containerized with **Docker** and orchestrated using **Docker Compose**, making it easy to run regardless of the host machine configuration.
 ---
 ## 📂 Project Structure
