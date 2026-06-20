@@ -58,6 +58,7 @@ The platform includes:
 - **Frontend:** a Single Page Application built with **Angular v19** and served through **Nginx**.
 
 The entire application is containerized with **Docker** and orchestrated using **Docker Compose**, making it easy to run regardless of the host machine configuration.
+
 ---
 ## 📂 Project Structure
 ```text
